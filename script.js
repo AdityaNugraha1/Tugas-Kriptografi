@@ -5,13 +5,20 @@ const caesarCipher = (plaintext, key) => {
   let ciphertext = "";
   key = key%26;
   for (let i = 0; i < plaintext.length; i++) {
-    let char = plaintext.charAt(i);
+    const char = plaintext.charAt(i);
+    const plainchar = plaintext.charAt(i).toLowerCase();
 
     if (char=== ' '|| !regex.test(char)) {
       ciphertext += char;
     } else {
-      const newChar = alphabet[(alphabet.indexOf(char) + key) % alphabet.length];
-    ciphertext += newChar;
+      const newChar = alphabet[(alphabet.indexOf(plainchar) + key) % alphabet.length];
+    
+      if (char===char.toUpperCase()) {
+        ciphertext += newChar.toUpperCase();
+      } else {
+        ciphertext += newChar;
+      }
+      
     }
     
   }
@@ -182,17 +189,25 @@ const decryptRailFence = (ciphertext, rails) => {
 };
 
 const encryptSuper = (plaintext, key) => {
-  const ciphertextCaesar = caesarCipher(plaintext, 3);
-  const ciphertextVigenere = encryptVigenere(ciphertextCaesar, key);
-  const ciphertextRailFence = encryptRailFence(ciphertextVigenere, ciphertextVigenere.length); // Menggunakan jumlah karakter ciphertext sebagai jumlah rail
-  return ciphertextRailFence;
+  if (regex.test(key)) {
+    const ciphertextCaesar = caesarCipher(plaintext, 3);
+    const ciphertextVigenere = encryptVigenere(ciphertextCaesar, key);
+    const ciphertextRailFence = encryptRailFence(ciphertextVigenere, 3)
+    return ciphertextRailFence;
+  } else {
+    return "key harus huruf";
+  }
 };
 
 const decryptSuper = (ciphertext, key) => {
-  const plaintextRailFence = decryptRailFence(ciphertext, ciphertext.length); // Menggunakan panjang ciphertext sebagai jumlah rail
-  const plaintextVigenere = decryptVigenere(plaintextRailFence, key);
-  const plaintextCaesar = caesarCipher(plaintextVigenere, -3);
-  return plaintextCaesar;
+  if (regex.test(key)) {
+    const plaintextRailFence = decryptRailFence(ciphertext, 3);
+    const plaintextVigenere = decryptVigenere(plaintextRailFence, key);
+    const plaintextCaesar = caesarCipher(plaintextVigenere, 23);
+    return plaintextCaesar;
+  } else {
+    return "key harus huruf";
+  }
 };
 
 const init = () => {

@@ -1,56 +1,70 @@
 const alphabet = "abcdefghijklmnopqrstuvwxyz";
+const regex = /^[a-zA-Z]+$/;
 
-const encryptCaesar = (plaintext, key) => {
-  let ciphertext = '';
+const caesarCipher = (plaintext, key) => {
+  let ciphertext = "";
+  key = key%26;
   for (let i = 0; i < plaintext.length; i++) {
-    const char = plaintext.charAt(i);
-    const newChar = alphabet[(alphabet.indexOf(char) + key) % alphabet.length];
+    let char = plaintext.charAt(i);
+
+    if (char=== ' '|| !regex.test(char)) {
+      ciphertext += char;
+    } else {
+      const newChar = alphabet[(alphabet.indexOf(char) + key) % alphabet.length];
     ciphertext += newChar;
+    }
+    
   }
   return ciphertext;
-};
-
-const decryptCaesar = (ciphertext, key) => {
-  return encryptCaesar(ciphertext, -key);
 };
 
 const encryptVigenere = (plaintext, key) => {
-  let ciphertext = '';
-  let keyIndex = 0;
+  if (regex.test(key)) {
+    let ciphertext = "";
+    let keyIndex = 0;
 
-  for (let i = 0; i < plaintext.length; i++) {
-    const char = plaintext.charAt(i);
+    for (let i = 0; i < plaintext.length; i++) {
+      const char = plaintext.charAt(i);
 
-    // Jika karakter adalah spasi, tambahkan spasi ke teks terenkripsi
-    if (char === ' ') {
-      ciphertext += ' ';
-    } else {
-      const newChar = alphabet[(alphabet.indexOf(char) + alphabet.indexOf(key.charAt(keyIndex % key.length))) % alphabet.length];
-      ciphertext += newChar;
-      keyIndex++;
+      // Jika karakter adalah spasi, tambahkan spasi ke teks terenkripsi
+      if (char === ' ') {
+        ciphertext += ' ';
+      } else {
+        const newChar = alphabet[(alphabet.indexOf(char) + alphabet.indexOf(key.charAt(keyIndex % key.length))) % alphabet.length];
+        ciphertext += newChar;
+        keyIndex++;
+      }
     }
+    return ciphertext;
+  } else {
+    return "key harus huruf"
   }
-  return ciphertext;
+  
 };
 
 const decryptVigenere = (ciphertext, key) => {
-  let plaintext = '';
-  let keyIndex = 0;
+  if (regex.test(key)) {
+    let plaintext = "";
+    let keyIndex = 0;
 
-  for (let i = 0; i < ciphertext.length; i++) {
-    const char = ciphertext.charAt(i);
+    for (let i = 0; i < ciphertext.length; i++) {
+      const char = ciphertext.charAt(i);
 
-    // Jika karakter adalah spasi, tambahkan spasi ke teks terdekripsi
-    if (char === ' ') {
-      plaintext += ' ';
-    } else {
-      const newCharIndex = (alphabet.indexOf(char) - alphabet.indexOf(key.charAt(keyIndex % key.length)) + alphabet.length) % alphabet.length;
-      const newChar = alphabet[newCharIndex];
-      plaintext += newChar;
-      keyIndex++;
+      // Jika karakter adalah spasi, tambahkan spasi ke teks terdekripsi
+      if (char === ' ') {
+        plaintext += ' ';
+      } else {
+        const newCharIndex = (alphabet.indexOf(char) - alphabet.indexOf(key.charAt(keyIndex % key.length)) + alphabet.length) % alphabet.length;
+        const newChar = alphabet[newCharIndex];
+        plaintext += newChar;
+        keyIndex++;
+      }
     }
-  }
   return plaintext;
+  } else {
+    return "key harus huruf"
+  }
+  
 };
 
 const encryptRailFence = (plaintext, rails) => {
@@ -149,7 +163,7 @@ const decryptRailFence = (ciphertext, rails) => {
 };
 
 const encryptSuper = (plaintext, key) => {
-  const ciphertextCaesar = encryptCaesar(plaintext, 3);
+  const ciphertextCaesar = caesarCipher(plaintext, 3);
   const ciphertextVigenere = encryptVigenere(ciphertextCaesar, key);
   const ciphertextRailFence = encryptRailFence(ciphertextVigenere, 3)
   return ciphertextRailFence;
@@ -158,7 +172,7 @@ const encryptSuper = (plaintext, key) => {
 const decryptSuper = (ciphertext, key) => {
   const plaintextRailFence = decryptRailFence(ciphertext, 3);
   const plaintextVigenere = decryptVigenere(plaintextRailFence, key.split("").reverse().join(""));
-  const plaintextCaesar = decryptCaesar(plaintextVigenere, -3);
+  const plaintextCaesar = caesarCipher(plaintextVigenere, -3);
   return plaintextCaesar;
 };
 
@@ -186,58 +200,58 @@ const init = () => {
   document.querySelector("#encrypt-caesar").addEventListener("click", () => {
     const plaintext = document.querySelector("#plaintext-caesar").value;
     const key = document.querySelector("#key-caesar").value;
-    const ciphertext = encryptCaesar(plaintext, key);
-    document.querySelector("#ciphertext-caesar").innerHTML = ciphertext;
+    const ciphertext = caesarCipher(plaintext, key);
+    document.querySelector("#result-caesar").innerHTML = ciphertext;
   });
 
 
   document.querySelector("#decrypt-caesar").addEventListener("click", () => {
-    const ciphertext = document.querySelector("#ciphertext-caesar").innerHTML;
-    const key = document.querySelector("#key-caesar").value;
-    const plaintext = decryptCaesar(ciphertext, key);
-    document.querySelector("#plaintext-caesar-decrypt").innerHTML = plaintext;
+    const ciphertext = document.querySelector("#plaintext-caesar").value;
+    const key = 26-document.querySelector("#key-caesar").value;
+    const plaintext = caesarCipher(ciphertext, key);
+    document.querySelector("#result-caesar").innerHTML = plaintext;
   });
 
   document.querySelector("#encrypt-vigenere").addEventListener("click", () => {
     const plaintext = document.querySelector("#plaintext-vigenere").value;
     const key = document.querySelector("#key-vigenere").value;
     const ciphertext = encryptVigenere(plaintext, key);
-    document.querySelector("#ciphertext-vigenere").innerHTML = ciphertext;
+    document.querySelector("#result-vigenere").innerHTML = ciphertext;
   });
 
   document.querySelector("#decrypt-vigenere").addEventListener("click", () => {
-    const ciphertext = document.querySelector("#ciphertext-vigenere").innerHTML;
+    const ciphertext = document.querySelector("#plaintext-vigenere").value;
     const key = document.querySelector("#key-vigenere").value;
     const plaintext = decryptVigenere(ciphertext, key);
-    document.querySelector("#plaintext-vigenere-decrypt").innerHTML = plaintext;
+    document.querySelector("#result-vigenere").innerHTML = plaintext;
   });
 
   document.querySelector("#encrypt-rail-fence").addEventListener("click", () => {
     const plaintext = document.querySelector("#plaintext-rail-fence").value;
     const rails = parseInt(document.querySelector("#rails").value); // Mengambil jumlah rails
     const ciphertext = encryptRailFence(plaintext, rails);
-    document.querySelector("#ciphertext-rail-fence").innerHTML = ciphertext;
+    document.querySelector("#result-rail-fence").innerHTML = ciphertext;
   });
 
   document.querySelector("#decrypt-rail-fence").addEventListener("click", () => {
-    const ciphertext = document.querySelector("#ciphertext-rail-fence").innerHTML;
+    const ciphertext = document.querySelector("#plaintext-rail-fence").value;
     const rails = parseInt(document.querySelector("#rails").value); // Mengambil jumlah rails
     const plaintext = decryptRailFence(ciphertext, rails);
-    document.querySelector("#plaintext-rail-fence-decrypt").innerHTML = plaintext;
+    document.querySelector("#result-rail-fence").innerHTML = plaintext;
   });
 
   document.querySelector("#encrypt-super").addEventListener("click", () => {
     const plaintext = document.querySelector("#plaintext-super").value;
     const key = document.querySelector("#key-super").value;
     const ciphertext = encryptSuper(plaintext, key);
-    document.querySelector("#ciphertext-super").innerHTML = ciphertext;
+    document.querySelector("#result-super").innerHTML = ciphertext;
   });
 
   document.querySelector("#decrypt-super").addEventListener("click", () => {
-    const ciphertext = document.querySelector("#ciphertext-super").innerHTML;
+    const ciphertext = document.querySelector("#plaintext-super").value;
     const key = document.querySelector("#key-super").value;
     const plaintext = decryptSuper(ciphertext, key);
-    document.querySelector("#plaintext-super-decrypt").innerHTML = plaintext;
+    document.querySelector("#result-super").innerHTML = plaintext;
   });
 };
 

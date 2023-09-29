@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Aplikasi Enkripsi dan Dekripsi</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Aplikasi Enkripsi dan Dekripsi</h1>
+    <ul class="menu">
+      <li><a href="#" data-section="caesar">Enkripsi Caesar</a></li>
+      <li><a href="#" data-section="vigenere">Enkripsi Vigenere</a></li>
+      <li><a href="#" data-section="des">Enkripsi DES</a></li>
+      <li><a href="#" data-section="super">Super Enkripsi</a></li>
+    </ul>
+    <div class="content">
+      <div id="caesar" class="active">
+        <h2>Enkripsi Caesar</h2>
+        <input type="text" id="plaintext-caesar" placeholder="Plaintext">
+        <input type="number" id="key-caesar" placeholder="Key">
+        <button type="button" id="encrypt-caesar">Enkripsi</button>
+        <button type="button" id="decrypt-caesar">Dekripsi</button>
+        <div class="result">
+          <p id="ciphertext-caesar"></p>
+          <p id="plaintext-caesar-decrypt"></p>
+        </div>
+      </div>
+      <div id="vigenere">
+        <h2>Enkripsi Vigenere</h2>
+        <input type="text" id="plaintext-vigenere" placeholder="Plaintext">
+        <input type="text" id="key-vigenere" placeholder="Key">
+        <button type="button" id="encrypt-vigenere">Enkripsi</button>
+        <button type="button" id="decrypt-vigenere">Dekripsi</button>
+        <div class="result">
+          <p id="ciphertext-vigenere"></p>
+          <p id="plaintext-vigenere-decrypt"></p>
+        </div>
+      </div>
+      <div id="des">
+        <h2>Enkripsi DES</h2>
+        <input type="text" id="plaintext-des" placeholder="Plaintext">
+        <input type="password" id="key-des" placeholder="Key">
+        <button type="button" id="encrypt-des">Enkripsi</button>
+        <button type="button" id="decrypt-des">Dekripsi</button>
+        <div class="result">
+          <p id="ciphertext-des"></p>
+          <p id="plaintext-des-decrypt"></p>
+        </div>
+      </div>
+      <div id="super">
+        <h2>Super Enkripsi</h2>
+        <input type="text" id="plaintext-super" placeholder="Plaintext">
+        <input type="password" id="key-super" placeholder="Key">
+        <button type="button" id="encrypt-super">Enkripsi</button>
+        <button type="button" id="decrypt-super">Dekripsi</button>
+        <div class="result">
+          <p id="ciphertext-super"></p>
+          <p id="plaintext-super-decrypt"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

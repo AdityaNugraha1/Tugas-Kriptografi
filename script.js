@@ -28,24 +28,92 @@ const decryptVigenere = (ciphertext, key) => {
   return encryptVigenere(ciphertext, key.split("").reverse().join(""));
 };
 
-const encryptDES = (plaintext, key) => {
+const encryptRailFence = (plaintext, rails) => {
+  if (rails < 2) {
+    return plaintext; 
+  }
+
+  const fence = new Array(rails).fill(0).map(() => []);
+  let rail = 0;
+  let direction = 1;
+
+  for (let i = 0; i < plaintext.length; i++) {
+    fence[rail].push(plaintext.charAt(i));
+    if (rail === 0) {
+      direction = 1;
+    } else if (rail === rails - 1) {
+      direction = -1;
+    }
+
+    rail += direction;
+  }
+
+  const ciphertext = fence.map(row => row.join('')).join('');
+
+  return ciphertext;
+};
+
+const decryptRailFence = (ciphertext, rails) => {
+  if (rails < 2) {
+    return ciphertext; // Tidak ada dekripsi jika jumlah rel kurang dari 2
+  }
+
+  const fence = new Array(rails).fill(0).map(() => []);
+  const railLengths = new Array(rails).fill(0);
+  let rail = 0;
+  let direction = 1;
+
+  for (let i = 0; i < ciphertext.length; i++) {
+    railLengths[rail]++;
+    
+    if (rail === 0) {
+      direction = 1;
+    } else if (rail === rails - 1) {
+      direction = -1;
+    }
+
+    rail += direction;
+  }
+
+  let currentIndex = 0;
+
+  for (let rail = 0; rail < rails; rail++) {
+    for (let j = 0; j < railLengths[rail]; j++) {
+      fence[rail].push(ciphertext.charAt(currentIndex));
+      currentIndex++;
+    }
+  }
+
+  let plaintext = '';
+  rail = 0;
+  direction = 1;
+
+  for (let i = 0; i < ciphertext.length; i++) {
+    plaintext += fence[rail].shift();
+
+    if (rail === 0) {
+      direction = 1;
+    } else if (rail === rails - 1) {
+      direction = -1;
+    }
+
+    rail += direction;
+  }
+
   return plaintext;
 };
 
-const decryptDES = (ciphertext, key) => {
-  return ciphertext;
-};
 
 const encryptSuper = (plaintext, key) => {
   const ciphertextCaesar = encryptCaesar(plaintext, 3);
   const ciphertextVigenere = encryptVigenere(ciphertextCaesar, key);
-  const ciphertextDES = encryptDES(ciphertextVigenere, key);
-  return ciphertextDES;
+  const ciphertextRailFence = encryptRailFence(ciphertextVigenere, 3)
+  return ciphertextRailFence;
 };
 
 const decryptSuper = (ciphertext, key) => {
-  const plaintextDES = decryptDES(ciphertext, key);
-  const plaintextVigenere = decryptVigenere(plaintextDES, key.split("").reverse().join(""));
+  const plaintextRailFence = decryptRailFence(ciphertext, 3);
+  const plaintextVigenere = decryptVigenere(plaintextRailFence, key.split("").reverse().join(""));
   const plaintextCaesar = decryptCaesar(plaintextVigenere, -3);
   return plaintextCaesar;
 };
@@ -100,18 +168,18 @@ const init = () => {
     document.querySelector("#plaintext-vigenere-decrypt").innerHTML = plaintext;
   });
 
-  document.querySelector("#encrypt-des").addEventListener("click", () => {
-    const plaintext = document.querySelector("#plaintext-des").value;
-    const key = document.querySelector("#key-des").value;
-    const ciphertext = encryptDES(plaintext, key);
-    document.querySelector("#ciphertext-des").innerHTML = ciphertext;
+  document.querySelector("#encrypt-rail-fence").addEventListener("click", () => {
+    const plaintext = document.querySelector("#plaintext-rail-fence").value;
+    const rails = parseInt(document.querySelector("#rails").value); // Mengambil jumlah rails
+    const ciphertext = encryptRailFence(plaintext, rails);
+    document.querySelector("#ciphertext-rail-fence").innerHTML = ciphertext;
   });
 
-  document.querySelector("#decrypt-des").addEventListener("click", () => {
-    const ciphertext = document.querySelector("#ciphertext-des").innerHTML;
-    const key = document.querySelector("#key-des").value;
-    const plaintext = decryptDES(ciphertext, key);
-    document.querySelector("#plaintext-des-decrypt").innerHTML = plaintext;
+  document.querySelector("#decrypt-rail-fence").addEventListener("click", () => {
+    const ciphertext = document.querySelector("#ciphertext-rail-fence").innerHTML;
+    const rails = parseInt(document.querySelector("#rails").value); // Mengambil jumlah rails
+    const plaintext = decryptRailFence(ciphertext, rails);
+    document.querySelector("#plaintext-rail-fence-decrypt").innerHTML = plaintext;
   });
 
   document.querySelector("#encrypt-super").addEventListener("click", () => {

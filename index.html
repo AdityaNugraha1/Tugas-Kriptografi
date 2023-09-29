@@ -11,7 +11,7 @@
     <ul class="menu">
       <li><a href="#" data-section="caesar">Enkripsi Caesar</a></li>
       <li><a href="#" data-section="vigenere">Enkripsi Vigenere</a></li>
-      <li><a href="#" data-section="des">Enkripsi DES</a></li>
+      <li><a href="#" data-section="rail-fence">Enkripsi Rail Fence</a></li>
       <li><a href="#" data-section="super">Super Enkripsi</a></li>
     </ul>
     <div class="content">
@@ -37,17 +37,18 @@
           <p id="plaintext-vigenere-decrypt"></p>
         </div>
       </div>
-      <div id="des">
-        <h2>Enkripsi DES</h2>
-        <input type="text" id="plaintext-des" placeholder="Plaintext">
-        <input type="password" id="key-des" placeholder="Key">
-        <button type="button" id="encrypt-des">Enkripsi</button>
-        <button type="button" id="decrypt-des">Dekripsi</button>
+      <div id="rail-fence">
+        <h2>Enkripsi Rail Fence</h2>
+        <input type="text" id="plaintext-rail-fence" placeholder="Plaintext">
+        <input type="number" id="rails" placeholder="Rails"> <!-- Tambah input untuk jumlah rel (rails) -->
+        <button type="button" id="encrypt-rail-fence">Enkripsi</button>
+        <button type="button" id="decrypt-rail-fence">Dekripsi</button>
         <div class="result">
-          <p id="ciphertext-des"></p>
-          <p id="plaintext-des-decrypt"></p>
+          <p id="ciphertext-rail-fence"></p>
+          <p id="plaintext-rail-fence-decrypt"></p>
         </div>
       </div>
+
       <div id="super">
         <h2>Super Enkripsi</h2>
         <input type="text" id="plaintext-super" placeholder="Plaintext">

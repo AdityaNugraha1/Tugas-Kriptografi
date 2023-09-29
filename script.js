@@ -30,16 +30,25 @@ const encryptVigenere = (plaintext, key) => {
       if (char === ' ') {
         ciphertext += ' ';
       } else {
-        const newChar = alphabet[(alphabet.indexOf(char) + alphabet.indexOf(key.charAt(keyIndex % key.length))) % alphabet.length];
-        ciphertext += newChar;
+        // Ubah karakter kunci menjadi huruf kecil
+        const lowercaseKey = key.charAt(keyIndex % key.length).toLowerCase();
+        
+        const newChar = alphabet[(alphabet.indexOf(char.toLowerCase()) + alphabet.indexOf(lowercaseKey)) % alphabet.length];
+        
+        // Jika karakter asli adalah huruf besar, ubah hasil enkripsi menjadi huruf besar juga
+        if (char === char.toUpperCase()) {
+          ciphertext += newChar.toUpperCase();
+        } else {
+          ciphertext += newChar;
+        }
+        
         keyIndex++;
       }
     }
     return ciphertext;
   } else {
-    return "key harus huruf"
+    return "key harus huruf";
   }
-  
 };
 
 const decryptVigenere = (ciphertext, key) => {

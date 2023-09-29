@@ -16,21 +16,46 @@ const decryptCaesar = (ciphertext, key) => {
 
 const encryptVigenere = (plaintext, key) => {
   let ciphertext = '';
+  let keyIndex = 0;
+
   for (let i = 0; i < plaintext.length; i++) {
     const char = plaintext.charAt(i);
-    const newChar = alphabet[(alphabet.indexOf(char) + alphabet.indexOf(key.charAt(i % key.length))) % alphabet.length];
-    ciphertext += newChar;
+
+    // Jika karakter adalah spasi, tambahkan spasi ke teks terenkripsi
+    if (char === ' ') {
+      ciphertext += ' ';
+    } else {
+      const newChar = alphabet[(alphabet.indexOf(char) + alphabet.indexOf(key.charAt(keyIndex % key.length))) % alphabet.length];
+      ciphertext += newChar;
+      keyIndex++;
+    }
   }
   return ciphertext;
 };
 
 const decryptVigenere = (ciphertext, key) => {
-  return encryptVigenere(ciphertext, key.split("").reverse().join(""));
+  let plaintext = '';
+  let keyIndex = 0;
+
+  for (let i = 0; i < ciphertext.length; i++) {
+    const char = ciphertext.charAt(i);
+
+    // Jika karakter adalah spasi, tambahkan spasi ke teks terdekripsi
+    if (char === ' ') {
+      plaintext += ' ';
+    } else {
+      const newCharIndex = (alphabet.indexOf(char) - alphabet.indexOf(key.charAt(keyIndex % key.length)) + alphabet.length) % alphabet.length;
+      const newChar = alphabet[newCharIndex];
+      plaintext += newChar;
+      keyIndex++;
+    }
+  }
+  return plaintext;
 };
 
 const encryptRailFence = (plaintext, rails) => {
   if (rails < 2) {
-    return plaintext; 
+    return plaintext;
   }
 
   const fence = new Array(rails).fill(0).map(() => []);
@@ -38,7 +63,15 @@ const encryptRailFence = (plaintext, rails) => {
   let direction = 1;
 
   for (let i = 0; i < plaintext.length; i++) {
-    fence[rail].push(plaintext.charAt(i));
+    const char = plaintext.charAt(i);
+
+    // Jika karakter adalah spasi, lanjutkan ke karakter berikutnya
+    if (char === ' ') {
+      continue;
+    }
+
+    fence[rail].push(char);
+
     if (rail === 0) {
       direction = 1;
     } else if (rail === rails - 1) {
@@ -55,7 +88,7 @@ const encryptRailFence = (plaintext, rails) => {
 
 const decryptRailFence = (ciphertext, rails) => {
   if (rails < 2) {
-    return ciphertext; // Tidak ada dekripsi jika jumlah rel kurang dari 2
+    return ciphertext;
   }
 
   const fence = new Array(rails).fill(0).map(() => []);
@@ -64,8 +97,13 @@ const decryptRailFence = (ciphertext, rails) => {
   let direction = 1;
 
   for (let i = 0; i < ciphertext.length; i++) {
+    // Jika karakter adalah spasi, lanjutkan ke karakter berikutnya
+    if (ciphertext.charAt(i) === ' ') {
+      continue;
+    }
+
     railLengths[rail]++;
-    
+
     if (rail === 0) {
       direction = 1;
     } else if (rail === rails - 1) {
@@ -89,7 +127,14 @@ const decryptRailFence = (ciphertext, rails) => {
   direction = 1;
 
   for (let i = 0; i < ciphertext.length; i++) {
-    plaintext += fence[rail].shift();
+    const char = fence[rail].shift();
+
+    // Jika karakter adalah spasi, tambahkan spasi ke teks terdekripsi
+    if (char === ' ') {
+      plaintext += ' ';
+    } else {
+      plaintext += char;
+    }
 
     if (rail === 0) {
       direction = 1;
@@ -102,7 +147,6 @@ const decryptRailFence = (ciphertext, rails) => {
 
   return plaintext;
 };
-
 
 const encryptSuper = (plaintext, key) => {
   const ciphertextCaesar = encryptCaesar(plaintext, 3);

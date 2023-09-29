@@ -1,3 +1,10 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
 @media screen and (max-width: 768px) {
   .container {
     width: 100%;
@@ -57,6 +64,7 @@ ul.menu li a:hover {
 
 .content {
   padding: 20px;
+  background-color: white;
 }
 
 .content > div {
@@ -67,13 +75,51 @@ ul.menu li a:hover {
   display: block;
 }
 
-input,
 button {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  font-weight: bold;
+}
+
+.input-fields{
+  position: relative;
+  padding: 10px 0px;
+}
+
+.input-fields input{
+  width: 100%;
+  height: 100%;
+  outline: 1.5px solid;
+  border: navajowhite;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 15px;
+}
+
+.input-fields label{
+  position: absolute;
+  top : 15px;
+  left: 5px;
+  font-size: 12px;
+  padding: 0 5px;
+  pointer-events: none;
+  transition: top .2s;
+  background-color: white;
+}
+
+.input-fields input:focus{
+  outline: 2px solid grey;
+}
+
+.input-fields input:focus + label{
+  top: -3px;
+}
+
+.input-fields input:not(:placeholder-shown) + label{
+  top: -2px;
 }
 
 .result {
@@ -83,22 +129,6 @@ button {
 
 p {
   text-align: center;
-}
-
-#caesar,
-#vigenere,
-#rail-fence,
-#super {
-  background-color: #fff;
-  border-radius: 5px;
-  padding: 20px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-}
-
-#super {
-  background-color: #333;
-  color: white;
 }
 
 input[type="text"],
@@ -134,28 +164,20 @@ button {
   transition: border-color 0.3s ease;
 }
 
+.btn-encrypt:hover {
+  background: rgb(159, 10, 10);
+  color: #fff;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-decrypt:hover {
+  background: green;
+  color: #fff;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
 ul.menu li a:hover {
   background-color: #444;
-  color: #fff;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-button:hover {
-  background-color: #444;
-  color: #fff;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-#super:hover {
-  background-color: #222;
-  transition: background-color 0.3s ease;
-}
-
-#caesar button:hover,
-#vigenere button:hover,
-#des button:hover,
-#super button:hover {
-  background-color: #666;
   color: #fff;
   transition: background-color 0.3s ease, color 0.3s ease;
 }

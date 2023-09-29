@@ -184,13 +184,13 @@ const decryptRailFence = (ciphertext, rails) => {
 const encryptSuper = (plaintext, key) => {
   const ciphertextCaesar = caesarCipher(plaintext, 3);
   const ciphertextVigenere = encryptVigenere(ciphertextCaesar, key);
-  const ciphertextRailFence = encryptRailFence(ciphertextVigenere, 3)
+  const ciphertextRailFence = encryptRailFence(ciphertextVigenere, ciphertextVigenere.length); // Menggunakan jumlah karakter ciphertext sebagai jumlah rail
   return ciphertextRailFence;
 };
 
 const decryptSuper = (ciphertext, key) => {
-  const plaintextRailFence = decryptRailFence(ciphertext, 3);
-  const plaintextVigenere = decryptVigenere(plaintextRailFence, key.split("").reverse().join(""));
+  const plaintextRailFence = decryptRailFence(ciphertext, ciphertext.length); // Menggunakan panjang ciphertext sebagai jumlah rail
+  const plaintextVigenere = decryptVigenere(plaintextRailFence, key);
   const plaintextCaesar = caesarCipher(plaintextVigenere, -3);
   return plaintextCaesar;
 };

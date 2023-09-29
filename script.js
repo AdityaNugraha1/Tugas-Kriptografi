@@ -1,7 +1,7 @@
 const alphabet = "abcdefghijklmnopqrstuvwxyz";
+const regex = /^[a-zA-Z]+$/;
 
 const caesarCipher = (plaintext, key) => {
-  let regex = /^[a-zA-Z]+$/;
   let ciphertext = "";
   key = key%26;
   for (let i = 0; i < plaintext.length; i++) {
@@ -19,42 +19,52 @@ const caesarCipher = (plaintext, key) => {
 };
 
 const encryptVigenere = (plaintext, key) => {
-  let ciphertext = "";
-  let keyIndex = 0;
+  if (regex.test(key)) {
+    let ciphertext = "";
+    let keyIndex = 0;
 
-  for (let i = 0; i < plaintext.length; i++) {
-    const char = plaintext.charAt(i);
+    for (let i = 0; i < plaintext.length; i++) {
+      const char = plaintext.charAt(i);
 
-    // Jika karakter adalah spasi, tambahkan spasi ke teks terenkripsi
-    if (char === ' ') {
-      ciphertext += ' ';
-    } else {
-      const newChar = alphabet[(alphabet.indexOf(char) + alphabet.indexOf(key.charAt(keyIndex % key.length))) % alphabet.length];
-      ciphertext += newChar;
-      keyIndex++;
+      // Jika karakter adalah spasi, tambahkan spasi ke teks terenkripsi
+      if (char === ' ') {
+        ciphertext += ' ';
+      } else {
+        const newChar = alphabet[(alphabet.indexOf(char) + alphabet.indexOf(key.charAt(keyIndex % key.length))) % alphabet.length];
+        ciphertext += newChar;
+        keyIndex++;
+      }
     }
+    return ciphertext;
+  } else {
+    return "key harus huruf"
   }
-  return ciphertext;
+  
 };
 
 const decryptVigenere = (ciphertext, key) => {
-  let plaintext = "";
-  let keyIndex = 0;
+  if (regex.test(key)) {
+    let plaintext = "";
+    let keyIndex = 0;
 
-  for (let i = 0; i < ciphertext.length; i++) {
-    const char = ciphertext.charAt(i);
+    for (let i = 0; i < ciphertext.length; i++) {
+      const char = ciphertext.charAt(i);
 
-    // Jika karakter adalah spasi, tambahkan spasi ke teks terdekripsi
-    if (char === ' ') {
-      plaintext += ' ';
-    } else {
-      const newCharIndex = (alphabet.indexOf(char) - alphabet.indexOf(key.charAt(keyIndex % key.length)) + alphabet.length) % alphabet.length;
-      const newChar = alphabet[newCharIndex];
-      plaintext += newChar;
-      keyIndex++;
+      // Jika karakter adalah spasi, tambahkan spasi ke teks terdekripsi
+      if (char === ' ') {
+        plaintext += ' ';
+      } else {
+        const newCharIndex = (alphabet.indexOf(char) - alphabet.indexOf(key.charAt(keyIndex % key.length)) + alphabet.length) % alphabet.length;
+        const newChar = alphabet[newCharIndex];
+        plaintext += newChar;
+        keyIndex++;
+      }
     }
-  }
   return plaintext;
+  } else {
+    return "key harus huruf"
+  }
+  
 };
 
 const encryptRailFence = (plaintext, rails) => {

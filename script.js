@@ -30,16 +30,25 @@ const encryptVigenere = (plaintext, key) => {
       if (char === ' ') {
         ciphertext += ' ';
       } else {
-        const newChar = alphabet[(alphabet.indexOf(char) + alphabet.indexOf(key.charAt(keyIndex % key.length))) % alphabet.length];
-        ciphertext += newChar;
+        // Ubah karakter kunci menjadi huruf kecil
+        const lowercaseKey = key.charAt(keyIndex % key.length).toLowerCase();
+        
+        const newChar = alphabet[(alphabet.indexOf(char.toLowerCase()) + alphabet.indexOf(lowercaseKey)) % alphabet.length];
+        
+        // Jika karakter asli adalah huruf besar, ubah hasil enkripsi menjadi huruf besar juga
+        if (char === char.toUpperCase()) {
+          ciphertext += newChar.toUpperCase();
+        } else {
+          ciphertext += newChar;
+        }
+        
         keyIndex++;
       }
     }
     return ciphertext;
   } else {
-    return "key harus huruf"
+    return "key harus huruf";
   }
-  
 };
 
 const decryptVigenere = (ciphertext, key) => {
@@ -54,17 +63,26 @@ const decryptVigenere = (ciphertext, key) => {
       if (char === ' ') {
         plaintext += ' ';
       } else {
-        const newCharIndex = (alphabet.indexOf(char) - alphabet.indexOf(key.charAt(keyIndex % key.length)) + alphabet.length) % alphabet.length;
+        // Ubah karakter kunci menjadi huruf kecil
+        const lowercaseKey = key.charAt(keyIndex % key.length).toLowerCase();
+        
+        const newCharIndex = (alphabet.indexOf(char.toLowerCase()) - alphabet.indexOf(lowercaseKey) + alphabet.length) % alphabet.length;
         const newChar = alphabet[newCharIndex];
-        plaintext += newChar;
+        
+        // Jika karakter dalam ciphertext adalah huruf besar, ubah hasil dekripsi menjadi huruf besar juga
+        if (char === char.toUpperCase()) {
+          plaintext += newChar.toUpperCase();
+        } else {
+          plaintext += newChar;
+        }
+        
         keyIndex++;
       }
     }
-  return plaintext;
+    return plaintext;
   } else {
-    return "key harus huruf"
+    return "key harus huruf";
   }
-  
 };
 
 const encryptRailFence = (plaintext, rails) => {
@@ -101,6 +119,7 @@ const encryptRailFence = (plaintext, rails) => {
 };
 
 const decryptRailFence = (ciphertext, rails) => {
+  ciphertext = ciphertext.replace(/\s/g, '');
   if (rails < 2) {
     return ciphertext;
   }

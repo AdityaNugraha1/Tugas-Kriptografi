@@ -119,6 +119,7 @@ const encryptRailFence = (plaintext, rails) => {
 };
 
 const decryptRailFence = (ciphertext, rails) => {
+  ciphertext = ciphertext.replace(/\s/g, '');
   if (rails < 2) {
     return ciphertext;
   }

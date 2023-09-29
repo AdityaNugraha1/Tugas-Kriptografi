@@ -1,63 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Aplikasi Enkripsi dan Dekripsi</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="container">
-    <h1>Aplikasi Enkripsi dan Dekripsi</h1>
-    <ul class="menu">
-      <li><a href="#" data-section="caesar">Enkripsi Caesar</a></li>
-      <li><a href="#" data-section="vigenere">Enkripsi Vigenere</a></li>
-      <li><a href="#" data-section="rail-fence">Enkripsi Rail Fence</a></li>
-      <li><a href="#" data-section="super">Super Enkripsi</a></li>
-    </ul>
-    <div class="content">
-      <div id="caesar" class="active">
-        <h2>Enkripsi Caesar</h2>
-        <input type="text" id="plaintext-caesar" placeholder="Plaintext">
-        <input type="number" id="key-caesar" placeholder="Key">
-        <button type="button" id="encrypt-caesar">Enkripsi</button>
-        <button type="button" id="decrypt-caesar">Dekripsi</button>
-        <div class="result">
-          <p id="result-caesar"></p>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Aplikasi Enkripsi dan Dekripsi</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Aplikasi Enkripsi dan Dekripsi</h1>
+      <ul class="menu">
+        <li><a href="#" data-section="caesar">Enkripsi Caesar</a></li>
+        <li><a href="#" data-section="vigenere">Enkripsi Vigenere</a></li>
+        <li><a href="#" data-section="rail-fence">Enkripsi Rail Fence</a></li>
+        <li><a href="#" data-section="super">Super Enkripsi</a></li>
+      </ul>
+      <div class="content">
+        <div id="caesar" class="active">
+          <h2>Enkripsi Caesar</h2>
+          <div class="input-fields">
+            <input type="text" id="plaintext-caesar" placeholder="" />
+            <label for="">Plaintext</label>
+          </div>
+          <div class="input-fields">
+            <input type="number" id="key-caesar" placeholder="" />
+            <label for="">Key</label>
+          </div>
+          <button type="button" class="btn-encrypt" id="encrypt-caesar">Enkripsi</button>
+          <button type="button" class="btn-decrypt" id="decrypt-caesar">Dekripsi</button>
+          <div class="result">
+            <p id="result-caesar"></p>
+          </div>
         </div>
-      </div>
-      <div id="vigenere">
-        <h2>Enkripsi Vigenere</h2>
-        <input type="text" id="plaintext-vigenere" placeholder="Plaintext">
-        <input type="text" id="key-vigenere" placeholder="Key">
-        <button type="button" id="encrypt-vigenere">Enkripsi</button>
-        <button type="button" id="decrypt-vigenere">Dekripsi</button>
-        <div class="result">
-          <p id="result-vigenere"></p>
+        <div id="vigenere">
+          <h2>Enkripsi Vigenere</h2>
+          <div class="input-fields">
+            <input type="text" id="plaintext-vigenere" placeholder="" />
+            <label for="">Plaintext</label>
+          </div>
+          <div class="input-fields">
+            <input type="text" id="key-vigenere" placeholder="" />
+            <label for="">Key</label>
+          </div>
+          <button type="button" id="encrypt-vigenere">Enkripsi</button>
+          <button type="button" id="decrypt-vigenere">Dekripsi</button>
+          <div class="result">
+            <p id="result-vigenere"></p>
+          </div>
         </div>
-      </div>
-      <div id="rail-fence">
-        <h2>Enkripsi Rail Fence</h2>
-        <input type="text" id="plaintext-rail-fence" placeholder="Plaintext">
-        <input type="number" id="rails" placeholder="Rails"> <!-- Tambah input untuk jumlah rel (rails) -->
-        <button type="button" id="encrypt-rail-fence">Enkripsi</button>
-        <button type="button" id="decrypt-rail-fence">Dekripsi</button>
-        <div class="result">
-          <p id="result-rail-fence"></p>
+        <div id="rail-fence">
+          <h2>Enkripsi Rail Fence</h2>
+          <div class="input-fields">
+          <input type="text" id="plaintext-rail-fence" placeholder=""/>
+          <label for="">Plaintext</label>
+          </div>
+          <div class="input-fields">
+          <input type="number" id="rails" placeholder="" />
+            <label for="">Rails</label>
+          </div>
+          <!-- Tambah input untuk jumlah rel (rails) -->
+          <button type="button" id="encrypt-rail-fence">Enkripsi</button>
+          <button type="button" id="decrypt-rail-fence">Dekripsi</button>
+          <div class="result">
+            <p id="result-rail-fence"></p>
+          </div>
         </div>
-      </div>
 
-      <div id="super">
-        <h2>Super Enkripsi</h2>
-        <input type="text" id="plaintext-super" placeholder="Plaintext">
-        <input type="password" id="key-super" placeholder="Key">
-        <button type="button" id="encrypt-super">Enkripsi</button>
-        <button type="button" id="decrypt-super">Dekripsi</button>
-        <div class="result">
-          <p id="result-super"></p>
+        <div id="super">
+          <h2>Super Enkripsi</h2>
+          <div class="input-fields">
+          <input type="text" id="plaintext-super" placeholder=""/>
+          <label for="">Plaintext</label>
+          </div>
+          <div class="input-fields">
+          <input type="password" id="key-super" placeholder="" />
+          <label for="">Key</label>
+          </div>
+          <button type="button" id="encrypt-super">Enkripsi</button>
+          <button type="button" id="decrypt-super">Dekripsi</button>
+          <div class="result">
+            <p id="result-super"></p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>

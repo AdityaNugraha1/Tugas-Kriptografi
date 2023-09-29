@@ -197,7 +197,6 @@ const encryptSuper = (plaintext, key) => {
   } else {
     return "key harus huruf";
   }
-  
 };
 
 const decryptSuper = (ciphertext, key) => {
@@ -209,7 +208,6 @@ const decryptSuper = (ciphertext, key) => {
   } else {
     return "key harus huruf";
   }
-  
 };
 
 const init = () => {

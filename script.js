@@ -34,8 +34,8 @@ const encryptVigenere = (plaintext, key) => {
       const char = plaintext.charAt(i);
 
       // Jika karakter adalah spasi, tambahkan spasi ke teks terenkripsi
-      if (char === ' ') {
-        ciphertext += ' ';
+      if (char=== ' '|| !regex.test(char)) {
+        ciphertext += char;
       } else {
         // Ubah karakter kunci menjadi huruf kecil
         const lowercaseKey = key.charAt(keyIndex % key.length).toLowerCase();
@@ -67,8 +67,8 @@ const decryptVigenere = (ciphertext, key) => {
       const char = ciphertext.charAt(i);
 
       // Jika karakter adalah spasi, tambahkan spasi ke teks terdekripsi
-      if (char === ' ') {
-        plaintext += ' ';
+      if (char=== ' '|| !regex.test(char)) {
+        plaintext += char;
       } else {
         // Ubah karakter kunci menjadi huruf kecil
         const lowercaseKey = key.charAt(keyIndex % key.length).toLowerCase();
@@ -241,7 +241,7 @@ const init = () => {
 
   document.querySelector("#decrypt-caesar").addEventListener("click", () => {
     const ciphertext = document.querySelector("#plaintext-caesar").value;
-    const key = 26-document.querySelector("#key-caesar").value;
+    const key = 26-(document.querySelector("#key-caesar").value%26);
     const plaintext = caesarCipher(ciphertext, key);
     document.querySelector("#result-caesar").innerHTML = plaintext;
   });
